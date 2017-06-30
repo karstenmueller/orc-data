@@ -2,7 +2,7 @@
 #
 
 URL = http://data.orc.org/public/WPub.dll?action=DownRMS&CountryId=
-COUNTRIES = ITA NOR ESP NED GRE GER POL CRO FRA SUI ARG AUS POR \
+COUNTRIES = ITA NOR ESP NED GBR GRE GER POL CRO FRA SUI ARG AUS POR \
             LTU FIN RUS BRA EST ISR SWE UKR ROU HUN AUT CAN JPN \
 			KOR ECU PER SLO CHN CYP NLS DEN LAT MLT MNE TUR MRI USA
 
@@ -34,7 +34,7 @@ data/$(YEAR)/%$(YEAR).rms: data
 
 	# Header alignment in these files seems to be broken, we fix header alignment by
 	# replacing it with hand crafted header.
-	{ cat header.rms; tail tmp.rms -n +2; } > $@
+	{ cat header.rms; sed 1d tmp.rms; } > $@
 	rm tmp.rms
 
 csv:
@@ -53,5 +53,11 @@ clean:
 test:
 	npm run lint
 	flake8 --ignore=E501 scoring.py rms/*.py
+	pushd site; ws --spa index.html 
+
+install:
+	sudo pip install flake8
+	sudo npm install -g eslint eslint-plugin-html local-web-server
+	npm install webpack
 
 .PHONY: site
