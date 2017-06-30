@@ -3,3 +3,6 @@ ALL2015.rms
 site/bundle.js.map
 meetbrieven/
 *.pyc
+*.log
+node_modules/
+.DS_Store
